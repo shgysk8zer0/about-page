@@ -2,6 +2,9 @@
 *.patch
 /node_modules/
 /npm-debug.log
+/images/icons.svg
+/stylesheets/styles/styles.css
+/scripts/custom.js
 *js.map
 
 #################
