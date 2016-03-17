@@ -1,11 +1,20 @@
 <?php
 namespace Autoloader;
+
+function cli_init($config = './config/env.json')
+{
+	$vars = json_decode(file_get_contents($config), true);
+	forEach($vars as $key => $value) {
+		putenv("$key=$value");
+	}
+}
 function assert_callback($script, $line, $code = 0, $message = null)
 {
 	echo sprintf('Assert failed: [%s:%u] "%s"', $script, $line, $message) . PHP_EOL;
 }
 // Configure assert options based on server usage (CLI or not)
-if (PHP_SAPI === 'cli') {
+if (in_array(PHP_SAPI, ['cli', 'cli-server'])) {
+	cli_init();
 	assert_options(ASSERT_ACTIVE,   true);
 	assert_options(ASSERT_BAIL,     true);
 	assert_options(ASSERT_WARNING,  false);
